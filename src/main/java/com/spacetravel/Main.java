@@ -1,25 +1,21 @@
 package com.spacetravel;
 
-import com.spacetravel.crud.ClientCrudService;
-import com.spacetravel.model.Client;
-import org.flywaydb.core.Flyway;
+import com.spacetravel.dao.ClientDao;
+import com.spacetravel.dao.impl.ClientDaoImpl;
+import com.spacetravel.service.ClientService;
+import com.spacetravel.service.impl.ClientServiceImpl;
 
 public class Main {
     public static void main(String[] args) {
-        Flyway flyway = Flyway.configure()
-                .dataSource("jdbc:h2:./spacetravel", "sa", "")
-                .load();
-        flyway.migrate();
+        ClientDao clientDao = new ClientDaoImpl();
 
-        ClientCrudService clientService = new ClientCrudService();
+        ClientService clientService = new ClientServiceImpl(clientDao);
 
-        Client newClient = new Client();
-        newClient.setName("Mark Watney");
-        clientService.save(newClient);
-
-        System.out.println("Saved client ID: " + newClient.getId());
-
-        Client found = clientService.findById(newClient.getId());
-        System.out.println("Found client: " + found.getName());
+        try {
+            clientService.createClient("Elon Musk");
+            System.out.println("Client created successfully!");
+        } catch (IllegalArgumentException e) {
+            System.err.println("Validation failed: " + e.getMessage());
+        }
     }
 }

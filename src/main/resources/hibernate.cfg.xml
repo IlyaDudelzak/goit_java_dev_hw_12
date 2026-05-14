@@ -18,5 +18,6 @@
         <!-- Регистрация сущностей -->
         <mapping class="com.spacetravel.model.Client"/>
         <mapping class="com.spacetravel.model.Planet"/>
+        <mapping class="com.spacetravel.model.Ticket"/>
     </session-factory>
 </hibernate-configuration>

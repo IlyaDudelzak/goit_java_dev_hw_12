@@ -1,21 +1,20 @@
 package com.spacetravel.dao.impl;
 
-import com.spacetravel.dao.PlanetDao;
-import com.spacetravel.model.Planet;
+import com.spacetravel.dao.TicketDao;
+import com.spacetravel.model.Ticket;
 import com.spacetravel.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import java.util.List;
 
-public class PlanetDaoImpl implements PlanetDao {
+public class TicketDaoImpl implements TicketDao {
 
     @Override
-    public void save(Planet planet) {
+    public void save(Ticket ticket) {
         Transaction tx = null;
         try (Session session = HibernateUtil.getInstance().openSession()) {
             tx = session.beginTransaction();
-            session.persist(planet);
+            session.persist(ticket);
             tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
@@ -24,18 +23,18 @@ public class PlanetDaoImpl implements PlanetDao {
     }
 
     @Override
-    public Planet findById(String id) {
+    public Ticket findById(long id) {
         try (Session session = HibernateUtil.getInstance().openSession()) {
-            return session.find(Planet.class, id);
+            return session.find(Ticket.class, id);
         }
     }
 
     @Override
-    public void update(Planet planet) {
+    public void update(Ticket ticket) {
         Transaction tx = null;
         try (Session session = HibernateUtil.getInstance().openSession()) {
             tx = session.beginTransaction();
-            session.merge(planet);
+            session.merge(ticket);
             tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
@@ -44,11 +43,11 @@ public class PlanetDaoImpl implements PlanetDao {
     }
 
     @Override
-    public void delete(Planet planet) {
+    public void delete(Ticket ticket) {
         Transaction tx = null;
         try (Session session = HibernateUtil.getInstance().openSession()) {
             tx = session.beginTransaction();
-            session.remove(planet);
+            session.remove(ticket);
             tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
@@ -57,9 +56,9 @@ public class PlanetDaoImpl implements PlanetDao {
     }
 
     @Override
-    public List<Planet> findAll() {
+    public List<Ticket> findAll() {
         try (Session session = HibernateUtil.getInstance().openSession()) {
-            return session.createQuery("from Planet", Planet.class).list();
+            return session.createQuery("from Ticket", Ticket.class).list();
         }
     }
 }

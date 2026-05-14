@@ -23,7 +23,7 @@ public class PlanetServiceImpl implements PlanetService {
     }
 
     @Override
-    public Planet getPlanet(long id) {
+    public Planet getPlanet(String id) {
         return planetDao.findById(id);
     }
 }
